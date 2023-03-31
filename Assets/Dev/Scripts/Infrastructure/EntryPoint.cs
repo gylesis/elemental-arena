@@ -19,10 +19,8 @@ namespace Dev.Infrastructure
 
         public void Initialize()
         {
-            //StartGame();
+            StartGame();
         }
-
-       
 
         private void JoinLobby()
         {

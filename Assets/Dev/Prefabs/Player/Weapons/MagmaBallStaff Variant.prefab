@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &8582789398509934044
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1285206850673511077, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_Name
+      value: MagmaBallStaff Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2735753704558638331, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305130069019026451, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: Flags
+      value: 2305
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305130069019026451, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: NetworkedBehaviours.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305130069019026451, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: NetworkedBehaviours.Array.data[0]
+      value: 
+      objectReference: {fileID: 394774133735548251}
+    - target: {fileID: 6305130069019026451, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
+      value: -1955630981207507162
+      objectReference: {fileID: 0}
+    - target: {fileID: 6305130069019026451, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
+      value: 1383943310012633272
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7511501537758544292, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+--- !u!4 &7018463547987766460 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1619789626576927072, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+  m_PrefabInstance: {fileID: 8582789398509934044}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7406672812513386361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1285206850673511077, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+  m_PrefabInstance: {fileID: 8582789398509934044}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &394774133735548251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7406672812513386361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd75984b157d400d84f1bb4c2aaef3b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _cooldown: 1.5
+  _damage: 10
+  _view: {fileID: 7018463547987766460}
+  _projectilePrefab: {fileID: 306556291203236149, guid: 7058ad67d1f858e47b2d248d1408c96f, type: 3}
+  _forcePower: 1300
+  _explosionRadius: 2
+  _explosionTime: 1.2
+  _magmaBallShardPrefab: {fileID: 8246896172453017525, guid: f7c764bf5cd19b54db7d74848f916f4e, type: 3}
+  _shardsForcePower: 1200
+  _shardsLifeTime: 2
