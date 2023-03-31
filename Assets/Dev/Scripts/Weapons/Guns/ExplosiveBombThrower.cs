@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Dev.Weapons.Ammo;
+using UnityEngine;
 
-namespace Dev
+namespace Dev.Weapons.Guns
 {
     public class ExplosiveBombThrower : BombThrower<ExplosiveBomb>
     {
