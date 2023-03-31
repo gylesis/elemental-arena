@@ -1,7 +1,8 @@
-﻿using Fusion;
+﻿using Dev.Infrastructure;
+using Fusion;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.Weapons.Guns
 {
     public class HookWeapon : HitscanWeapon
     {

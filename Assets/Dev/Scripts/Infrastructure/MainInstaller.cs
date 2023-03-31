@@ -1,8 +1,10 @@
-﻿using Fusion;
+﻿using Dev.CommonControllers;
+using Dev.Static_Data;
+using Fusion;
 using UnityEngine;
 using Zenject;
 
-namespace Dev
+namespace Dev.Infrastructure
 {
     public class MainInstaller : MonoInstaller
     {

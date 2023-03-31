@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Dev
+namespace Dev.Weapons.View
 {
     public class WeaponUiView : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.Static_Data
 {
     [CreateAssetMenu(menuName = "StaticData/FxContainer", fileName = "FxContainer", order = 0)]
     public class FxContainer : ScriptableObject

@@ -1,6 +1,10 @@
-﻿using DG.Tweening;
+﻿using System;
+using System.Threading;
+using DG.Tweening;
 using Fusion;
+using UniRx;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dev
 {
@@ -20,6 +24,27 @@ namespace Dev
                 .Append(_cube.DOScale(1, 0.5f))
                 .SetLoops(-1)
                 .Play();
+        }*/
+
+        /*private void Start()
+        {
+            Thread thread = new Thread((StartThread));
+            thread.Start();
+
+            Observable.EveryUpdate()
+            
+            Observable.Timer(TimeSpan.FromSeconds(5)).Subscribe((l =>
+            {
+                thread.Abort();
+            }));
+        }
+
+        private void StartThread(object obj)
+        {
+            while (true)
+            {
+                Debug.Log($"bla");
+            }
         }*/
 
         [ContextMenu("Change Color")]

@@ -2,7 +2,7 @@
 using UniRx;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.Weapons.Ammo
 {
     public abstract class Bomb : NetworkBehaviour
     {

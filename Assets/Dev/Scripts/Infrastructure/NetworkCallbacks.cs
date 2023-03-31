@@ -5,7 +5,7 @@ using Fusion.Sockets;
 using UnityEngine;
 using Zenject;
 
-namespace Dev
+namespace Dev.Infrastructure
 {
     public class NetworkCallbacks : NetworkObject, INetworkRunnerCallbacks
     {

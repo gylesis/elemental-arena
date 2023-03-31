@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using Zenject;
+﻿using Zenject;
 
-namespace Dev
+namespace Dev.Infrastructure
 {
     public class PlayerInstaller : MonoInstaller
     {

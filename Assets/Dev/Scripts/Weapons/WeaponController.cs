@@ -1,8 +1,10 @@
-﻿using Fusion;
+﻿using Dev.Weapons.Guns;
+using Dev.Weapons.View;
+using Fusion;
 using UniRx;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.Weapons
 {
     public class WeaponController : NetworkBehaviour
     {

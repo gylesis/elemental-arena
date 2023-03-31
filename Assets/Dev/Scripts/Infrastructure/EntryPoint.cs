@@ -1,9 +1,8 @@
 ﻿using Fusion;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
-namespace Dev
+namespace Dev.Infrastructure
 {
     public class EntryPoint : IInitializable
     {
@@ -20,8 +19,10 @@ namespace Dev
 
         public void Initialize()
         {
-            StartGame();
+            //StartGame();
         }
+
+       
 
         private void JoinLobby()
         {

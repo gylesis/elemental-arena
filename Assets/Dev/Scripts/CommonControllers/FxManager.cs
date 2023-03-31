@@ -1,9 +1,10 @@
 ﻿using System;
+using Dev.Static_Data;
 using Fusion;
 using UniRx;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.CommonControllers
 {
     public class FxManager 
     {

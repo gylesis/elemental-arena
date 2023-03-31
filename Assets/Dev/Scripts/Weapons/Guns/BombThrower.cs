@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using Dev.CommonControllers;
+using Dev.Weapons.Ammo;
 using Fusion;
 using UniRx;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.Weapons.Guns
 {
-    public abstract class BombThrower<T> : Throwable where T : Bomb
+    public abstract class BombThrower<T> : ThrowableWeapon where T : Bomb
     {
         [SerializeField] protected T _bombPrefab;
 

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using DG.Tweening;
 using Fusion;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace Dev
+namespace Dev.Weapons.Ammo
 {
     public class ExplosiveBomb : Bomb
     {

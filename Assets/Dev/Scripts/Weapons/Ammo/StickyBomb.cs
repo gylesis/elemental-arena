@@ -2,12 +2,11 @@
 using System.Linq;
 using DG.Tweening;
 using Fusion;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-namespace Dev
+namespace Dev.Weapons.Ammo
 {
     public class StickyBomb : Bomb
     {

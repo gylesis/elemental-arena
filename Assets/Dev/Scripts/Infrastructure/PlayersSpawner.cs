@@ -4,7 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
 
-namespace Dev
+namespace Dev.Infrastructure
 {
     public class PlayersSpawner : NetworkBehaviour
     {

@@ -1,7 +1,7 @@
-﻿using Fusion;
+﻿using Dev.Weapons.Ammo;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.Weapons.Guns
 {
     public class StickyBombThrower : BombThrower<StickyBomb>
     {
