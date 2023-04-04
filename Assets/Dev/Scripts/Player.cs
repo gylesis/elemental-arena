@@ -2,6 +2,7 @@
 using Dev.Infrastructure;
 using Dev.Weapons;
 using Fusion;
+using UniRx;
 using UnityEngine;
 
 namespace Dev
@@ -14,10 +15,13 @@ namespace Dev
         [SerializeField] private float _jumpPower = 2;
         [SerializeField] private float _jumpCooldown = 1;
 
+        [SerializeField] private Animator _animator;
+
         [SerializeField] private WeaponController _weaponController;
 
         [SerializeField] private Transform _pointer;
-
+        public Animator Animator => _animator;
+        
         private Vector3 _mousePos;
 
         public NetworkRigidbody2D Rigidbody => _rigidbody;
@@ -44,7 +48,10 @@ namespace Dev
             KeyCode.Alpha8,
             KeyCode.Alpha9,
         };
-        
+
+        private static readonly int JumpName = Animator.StringToHash("Jump");
+        private static readonly int Fall = Animator.StringToHash("Fall");
+
         public override void Spawned() // wrong, need to do it locally
         {
             if (HasInputAuthority)
@@ -85,6 +92,16 @@ namespace Dev
                 
                 if(AllowToMove == false) return;
 
+                if (Mathf.Approximately(inputData.Horizontal, 0))
+                {
+                    RPC_WalkAnimation(false);
+                }
+                else
+                {
+                    RPC_WalkAnimation(true);
+                }
+
+
                 Vector2 originVelocity = _rigidbody.Rigidbody.velocity;
                 originVelocity.x = inputData.Horizontal * _speed * Runner.DeltaTime;
 
@@ -109,6 +126,27 @@ namespace Dev
             _rigidbody.Rigidbody.AddForce(jumpDirection * _jumpPower, ForceMode2D.Impulse);
 
             JumpTimer = TickTimer.CreateFromSeconds(Runner, _jumpCooldown);
+
+            RPC_JumpAnimation();
+        }
+
+
+        [Rpc]
+        private void RPC_WalkAnimation(bool walk) 
+        { 
+            _animator.SetBool("Walk", walk);
+        }
+
+
+        [Rpc]
+        private void RPC_JumpAnimation()
+        {
+            _animator.SetTrigger(JumpName);
+
+            Observable.Timer(TimeSpan.FromSeconds(0.5f)).Subscribe((l =>
+            {
+                _animator.SetTrigger(Fall);
+            }));
         }
 
         public override void Render()
@@ -131,11 +169,33 @@ namespace Dev
                 
             }
 
+            var sign = Mathf.Sign(_rigidbody.Rigidbody.velocity.x);
+
+            if (_rigidbody.Rigidbody.velocity.x == 0)
+            {
+                sign = 0;
+            }
+            
+            Vector3 transformLocalScale = _bodySprite.transform.localScale;
+
+            Debug.Log($"{sign}");
+            
+            if (sign == 1)
+            {
+                transformLocalScale.x = 1;
+            }
+            else if(sign == -1)
+            {
+                transformLocalScale.x = -1;
+            }
+          
+
+            _bodySprite.transform.localScale = transformLocalScale;
         }
 
         private static void OnChangeColor(Changed<Player> changed)
         {
-            changed.Behaviour._bodySprite.color = changed.Behaviour.Color;
+           // changed.Behaviour._bodySprite.color = changed.Behaviour.Color;
         }
     }
 }

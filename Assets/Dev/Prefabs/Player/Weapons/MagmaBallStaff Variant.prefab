@@ -75,6 +75,10 @@ PrefabInstance:
       propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
       value: 1383943310012633272
       objectReference: {fileID: 0}
+    - target: {fileID: 6446122921192456384, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7511501537758544292, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b8eb41afba22d3c4490270b7ea205b09, type: 3}
