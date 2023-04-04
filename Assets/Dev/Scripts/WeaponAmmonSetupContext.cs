@@ -6,6 +6,7 @@ namespace Dev
     {
         public Vector3 Direction;
         public float Force;
+        public float Power;
     }
     
 }

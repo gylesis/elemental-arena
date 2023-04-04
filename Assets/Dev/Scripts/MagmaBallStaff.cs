@@ -7,19 +7,28 @@ namespace Dev
     {
         [SerializeField] private MagmaBallShard _magmaBallShardPrefab;
         [SerializeField] private float _shardsForcePower = 2f;
-        [SerializeField] private float _shardsLifeTime = 2f; 
+        [SerializeField] private float _shardsLifeTime = 2f;
+        [SerializeField] private Transform _aimPoint;
         
-        public override void Shoot(Vector3 origin, Vector3 direction)
+        public override void StartShoot()
+        {
+
+                
+        }   
+
+        public override void Shoot(Vector3 origin, Vector3 direction, float power = 1)
         {
             var setupContext = new WeaponAmmonSetupContext();
             setupContext.Direction = direction;
             setupContext.Force = _forcePower;
+            setupContext.Power = power;
 
             SpawnProjectile(origin, Quaternion.identity, setupContext);
         }
 
         protected override void OnProjectileBeforeSpawned(MagmaBall projectile, WeaponAmmonSetupContext setupContext)
         {
+            projectile.transform.localScale *= setupContext.Power + 1;
             projectile.Setup(setupContext);
         }
 

@@ -7,7 +7,7 @@ namespace Dev.Weapons.Guns
     {
         [SerializeField] protected float _expandTime = 1;
 
-        public override void Shoot(Vector3 origin, Vector3 direction)
+        public override void Shoot(Vector3 origin, Vector3 direction, float power = 1)
         {
             Runner.Spawn(_bombPrefab, origin, Quaternion.identity,
                 Object.InputAuthority, (runner, o) =>

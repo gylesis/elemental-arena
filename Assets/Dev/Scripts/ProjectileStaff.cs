@@ -15,7 +15,7 @@ namespace Dev
 
         [Networked] protected TickTimer ExplosionTimer { get; set; }
 
-        protected void SpawnProjectile(Vector3 pos, Quaternion rotation,
+        protected TProjectileType SpawnProjectile(Vector3 pos, Quaternion rotation,
             WeaponAmmonSetupContext weaponAmmonSetupContext)
         {
             _projectileType = Runner.Spawn(_projectilePrefab, pos, rotation,
@@ -27,6 +27,8 @@ namespace Dev
                 });
 
             ExplosionTimer = TickTimer.CreateFromSeconds(Runner, _explosionTime);
+
+            return _projectileType;
         }
 
         protected void SpawnAdditionalProjectile<TProjectile>(TProjectile projectilePrefab, Vector3 pos,

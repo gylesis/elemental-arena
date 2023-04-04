@@ -5,7 +5,7 @@ namespace Dev.Weapons.Guns
 {
     public class ExplosiveBombThrower : BombThrower<ExplosiveBomb>
     {
-        public override void Shoot(Vector3 origin, Vector3 direction)
+        public override void Shoot(Vector3 origin, Vector3 direction, float power = 1)
         {
             Runner.Spawn(_bombPrefab, origin, Quaternion.identity,
                 Object.InputAuthority, (runner, o) =>

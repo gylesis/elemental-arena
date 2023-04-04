@@ -107,6 +107,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _cooldown: 1.5
   _damage: 10
+  _shootDelay: 1
   _view: {fileID: 7018463547987766460}
   _projectilePrefab: {fileID: 306556291203236149, guid: 7058ad67d1f858e47b2d248d1408c96f, type: 3}
   _forcePower: 1300

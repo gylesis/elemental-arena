@@ -12,7 +12,7 @@ namespace Dev.Weapons
 
         private WeaponUiView _weaponUiView;
         private Player _player;
-        
+
         public bool AllowToShoot { get; set; } = true;
         public Weapon CurrentWeapon { get; set; }
 
@@ -21,7 +21,7 @@ namespace Dev.Weapons
         public override void Spawned()
         {
             _weaponUiView = FindObjectOfType<WeaponUiView>();
-            
+
             if (Object.HasInputAuthority)
             {
                 RPC_ChooseWeapon(1);
@@ -36,15 +36,55 @@ namespace Dev.Weapons
 
             if (AllowToShoot)
             {
-                var cooldown = CurrentWeapon.Cooldown;
+                var shootDelay = CurrentWeapon.ShootDelay;
 
-                CurrentWeapon.Shoot(originPos, direction);
-                CurrentWeapon.CooldownTimer = TickTimer.CreateFromSeconds(Runner, cooldown);
-
-                if (Object.HasInputAuthority)
+                if (shootDelay != 0 && CurrentWeapon.ShootDelayTimer.IsRunning == false)
                 {
-                    _weaponUiView.ShootReloadView(cooldown, cooldown);
+                    CurrentWeapon.ShootDelayTimer = TickTimer.CreateFromSeconds(Runner, shootDelay);
                 }
+                else if (CurrentWeapon.ShootDelayTimer.ExpiredOrNotRunning(Runner))
+                {
+                    Shoot(originPos, direction, 1);
+                }
+            }
+        }
+
+        public void TryToFireClickedDown(Vector3 originPos, Vector3 direction)
+        {
+            if(CurrentWeapon.ShootDelay == 0) return;
+
+            AllowToShoot = CurrentWeapon.CooldownTimer.ExpiredOrNotRunning(Runner);
+
+            if (AllowToShoot)
+            {
+                var power = CurrentWeapon.ShootDelayTimer.RemainingTime(Runner) / CurrentWeapon.ShootDelay;
+                    
+                Shoot(originPos, direction, 1 - power.Value);
+            }
+        }
+
+        private void Shoot(Vector3 originPos, Vector3 direction, float power = 1)
+        {
+            var cooldown = CurrentWeapon.Cooldown;
+
+            Debug.Log($"Power {power}");
+            
+            CurrentWeapon.Shoot(originPos, direction, power);
+            CurrentWeapon.CooldownTimer = TickTimer.CreateFromSeconds(Runner, cooldown);
+            CurrentWeapon.ShootDelayTimer = TickTimer.None;
+
+            _weaponUiView.ShootReloadView(cooldown, cooldown);
+        }
+        
+        public override void FixedUpdateNetwork()
+        {
+            if (Object.HasInputAuthority == false) return;
+
+            if (CurrentWeapon == null) return;
+
+            if (CurrentWeapon.ShootDelayTimer.IsRunning)
+            {
+                CurrentWeapon.StartShoot();
             }
         }
 
@@ -64,26 +104,25 @@ namespace Dev.Weapons
             }
 
             _weaponUiView.ShootReloadView(time, maxCooldown);
-
         }
 
         [Rpc]
         public void RPC_ChooseWeapon(int index)
         {
             var weaponIndex = Mathf.Clamp(index - 1, 0, _weapons.Length - 1);
-            
+
             Weapon chosenWeapon = _weapons[weaponIndex];
 
-            if(CurrentWeapon == chosenWeapon) return;
-            
+            if (CurrentWeapon == chosenWeapon) return;
+
             CurrentWeapon = chosenWeapon;
             CurrentWeapon.OnChosen();
-           
+
             WeaponChanged.OnNext(CurrentWeapon);
             OnWeaponChanged(chosenWeapon);
-            
+
             RPC_SelectViewWeapon();
-            
+
             if (Object.HasInputAuthority)
             {
                 Debug.Log($"Chosen weapon is {chosenWeapon.name}");
@@ -94,7 +133,7 @@ namespace Dev.Weapons
         private void RPC_SelectViewWeapon()
         {
             return;
-            
+
             foreach (Weapon weapon in _weapons)
             {
                 if (weapon == CurrentWeapon)
@@ -105,9 +144,6 @@ namespace Dev.Weapons
 
                 weapon.SetViewState(false);
             }
-   
         }
-        
-        
     }
 }

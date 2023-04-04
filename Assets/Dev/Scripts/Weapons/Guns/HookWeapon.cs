@@ -22,7 +22,7 @@ namespace Dev.Weapons.Guns
         private Player _hookedPlayer;
 
 
-        public override void Shoot(Vector3 origin, Vector3 direction)
+        public override void Shoot(Vector3 origin, Vector3 direction, float power = 1)
         {
             var raycast = Runner.LagCompensation.Raycast(origin, (Vector2)direction, _lenght, Object.InputAuthority,
                 out var hit, _layerMask);

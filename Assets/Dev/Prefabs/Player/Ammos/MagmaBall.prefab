@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 306556290955622648}
   - component: {fileID: 306556290955622651}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 306556291077130534}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 306556291203236147}
   - component: {fileID: 306556291203236144}
   - component: {fileID: 3978403882344680796}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MagmaBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   m_Component:
   - component: {fileID: 306556292846971794}
   - component: {fileID: 306556292846971797}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

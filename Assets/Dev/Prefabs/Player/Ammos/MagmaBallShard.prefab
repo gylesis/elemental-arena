@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8246896170583170349}
   - component: {fileID: 8246896170583170348}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8246896170708892764}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,7 +128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8246896171140155464}
   - component: {fileID: 8246896171140155831}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8246896172330197351}
   - component: {fileID: 8246896172330197350}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Triangle (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +300,7 @@ GameObject:
   - component: {fileID: 8246896172453017527}
   - component: {fileID: 8246896172453017160}
   - component: {fileID: 8246896172453017161}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MagmaBallShard
   m_TagString: Untagged
   m_Icon: {fileID: 0}

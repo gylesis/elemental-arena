@@ -51,6 +51,7 @@ namespace Dev
 
         private static readonly int JumpName = Animator.StringToHash("Jump");
         private static readonly int Fall = Animator.StringToHash("Fall");
+        private bool _firePressed;
 
         public override void Spawned() // wrong, need to do it locally
         {
@@ -80,8 +81,8 @@ namespace Dev
                 {
                     Jump();
                 }
-                
-                if (inputData.Fire)
+
+                if (_firePressed)
                 {
                     Vector3 direction = (_mousePos - transform.position).normalized;
 
@@ -89,6 +90,17 @@ namespace Dev
 
                     _weaponController.TryToFire(origin, direction);
                 }
+
+                if (inputData.Fire == false && _firePressed)
+                {
+                    Vector3 direction = (_mousePos - transform.position).normalized;
+
+                    Vector3 origin = _pointer.position + direction * 1.2f;
+
+                    _weaponController.TryToFireClickedDown(origin, direction);
+                }
+                
+                _firePressed = inputData.Fire;
                 
                 if(AllowToMove == false) return;
 
@@ -106,6 +118,7 @@ namespace Dev
                 originVelocity.x = inputData.Horizontal * _speed * Runner.DeltaTime;
 
                 _rigidbody.Rigidbody.velocity = originVelocity;
+                
             }
         }
 
@@ -177,8 +190,6 @@ namespace Dev
             }
             
             Vector3 transformLocalScale = _bodySprite.transform.localScale;
-
-            Debug.Log($"{sign}");
             
             if (sign == 1)
             {
@@ -188,7 +199,6 @@ namespace Dev
             {
                 transformLocalScale.x = -1;
             }
-          
 
             _bodySprite.transform.localScale = transformLocalScale;
         }
