@@ -12,6 +12,7 @@ namespace Dev.Infrastructure
         [SerializeField] private NetworkCallbacks _networkCallbacks;
         [SerializeField] private Scoreboard _scoreboard;
         [SerializeField] private FxContainer _fxContainer;
+        [SerializeField] private FxManager _fxManager;
         
         public override void InstallBindings()
         {
@@ -27,7 +28,7 @@ namespace Dev.Infrastructure
                 container.BindInterfacesAndSelfTo<EntryPoint>().AsSingle();
             })).AsSingle();
 
-            Container.Bind<FxManager>().AsSingle().NonLazy();
+            Container.Bind<FxManager>().FromInstance(_fxManager).AsSingle().NonLazy();
             Container.Bind<FxContainer>().FromInstance(_fxContainer).AsSingle();
             
             Container.Bind<NetworkRunner>().FromInstance(networkRunner).AsSingle();

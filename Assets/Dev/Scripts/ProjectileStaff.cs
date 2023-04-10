@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using Dev.Weapons.Guns;
+using Fusion;
 using UnityEngine;
 
 namespace Dev
@@ -11,26 +12,23 @@ namespace Dev
         [SerializeField] protected float _explosionRadius = 2f;
         [SerializeField] protected float _explosionTime = 2f;
 
-        private TProjectileType _projectileType;
+        [Networked] protected NetworkObject _spawnedProjectile { get; set; }
 
-        [Networked] protected TickTimer ExplosionTimer { get; set; }
-
-        protected TProjectileType SpawnProjectile(Vector3 pos, Quaternion rotation,
-            WeaponAmmonSetupContext weaponAmmonSetupContext)
+        protected void SpawnProjectile(Vector3 pos, Quaternion rotation)
         {
-            _projectileType = Runner.Spawn(_projectilePrefab, pos, rotation,
+            TProjectileType projectileType = Runner.Spawn(_projectilePrefab, pos, rotation,
                 Object.InputAuthority, (runner, o) =>
                 {
                     TProjectileType projectile = o.GetComponent<TProjectileType>();
 
-                    OnProjectileBeforeSpawned(projectile, weaponAmmonSetupContext);
+                    OnProjectileBeforeSpawned(projectile);
                 });
 
-            ExplosionTimer = TickTimer.CreateFromSeconds(Runner, _explosionTime);
-
-            return _projectileType;
+            if (Object.HasStateAuthority)
+            {
+                _spawnedProjectile = projectileType.Object;
+            }
         }
-
         protected void SpawnAdditionalProjectile<TProjectile>(TProjectile projectilePrefab, Vector3 pos,
             Quaternion rotation,
             WeaponAmmonSetupContext weaponAmmonSetupContext, NetworkRunner.OnBeforeSpawned onBeforeSpawned = null)
@@ -49,23 +47,20 @@ namespace Dev
 
         // protected abstract void OnProjectileCollided();
 
-        protected abstract void OnProjectileBeforeSpawned(TProjectileType projectile,
-            WeaponAmmonSetupContext setupContext);
+        protected abstract void OnProjectileBeforeSpawned(TProjectileType projectile);
 
         public override void FixedUpdateNetwork()
         {
+            base.FixedUpdateNetwork();
+            
             if (Object.HasStateAuthority == false) return;
 
-            if (ExplosionTimer.Expired(Runner))
+            if (DestroyTimer.Expired(Runner))
             {
-                DestroyAmmo(_projectileType);
+                DestroyAmmo(_spawnedProjectile.GetComponent<TProjectileType>());
             }
         }
 
-        protected virtual void DestroyAmmo(TProjectileType projectile)
-        {
-            ExplosionTimer = TickTimer.None;
-            Runner.Despawn(projectile.Object);
-        }
+       
     }
 }

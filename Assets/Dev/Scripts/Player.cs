@@ -1,4 +1,5 @@
 ﻿using System;
+using Dev.CommonControllers;
 using Dev.Infrastructure;
 using Dev.Weapons;
 using Fusion;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Dev
 {
-    public class Player : NetworkBehaviour
+    public class Player : NetworkContext
     {
         [SerializeField] private SpriteRenderer _bodySprite;
         [SerializeField] private NetworkRigidbody2D _rigidbody;
@@ -19,11 +20,8 @@ namespace Dev
 
         [SerializeField] private WeaponController _weaponController;
 
-        [SerializeField] private Transform _pointer;
-        public Animator Animator => _animator;
-        
+        [SerializeField] private PlayerHand _playerHand;
         private Vector3 _mousePos;
-
         public NetworkRigidbody2D Rigidbody => _rigidbody;
 
         [Networked(OnChanged = nameof(OnChangeColor))]
@@ -82,25 +80,28 @@ namespace Dev
                     Jump();
                 }
 
-                if (_firePressed)
+                if (inputData.FireDown)
                 {
-                    Vector3 direction = (_mousePos - transform.position).normalized;
-
-                    Vector3 origin = _pointer.position + direction * 1.2f;
+                    Vector3 direction = (_mousePos -  _weaponController.CurrentWeapon.ShootPoint.position).normalized;
+                    Vector3 origin =  _weaponController.CurrentWeapon.ShootPoint.position;
 
                     _weaponController.TryToFire(origin, direction);
                 }
 
-                if (inputData.Fire == false && _firePressed)
+                if (inputData.FireUp)
                 {
-                    Vector3 direction = (_mousePos - transform.position).normalized;
+                    Vector3 direction = (_mousePos -  _weaponController.CurrentWeapon.ShootPoint.position).normalized;
+                    Vector3 origin =  _weaponController.CurrentWeapon.ShootPoint.position;
 
-                    Vector3 origin = _pointer.position + direction * 1.2f;
-
-                    _weaponController.TryToFireClickedDown(origin, direction);
+                    _weaponController.TryToFireClickedUp(origin, direction);
                 }
-                
-                _firePressed = inputData.Fire;
+                else if (_weaponController.CurrentWeapon != null && _weaponController.CurrentWeapon.ShootDelayTimer.Expired(Runner))
+                {
+                    Vector3 direction = (_mousePos -  _weaponController.CurrentWeapon.ShootPoint.position).normalized;
+                    Vector3 origin =  _weaponController.CurrentWeapon.ShootPoint.position;
+
+                    _weaponController.TryToFireClickedUp(origin, direction);
+                }
                 
                 if(AllowToMove == false) return;
 
@@ -113,20 +114,18 @@ namespace Dev
                     RPC_WalkAnimation(true);
                 }
 
-
                 Vector2 originVelocity = _rigidbody.Rigidbody.velocity;
                 originVelocity.x = inputData.Horizontal * _speed * Runner.DeltaTime;
 
                 _rigidbody.Rigidbody.velocity = originVelocity;
-                
             }
         }
 
         private void SetPointerDirection(NetworkInputData inputData)
         {
             _mousePos = inputData.MousePos;
-            Vector3 pointerRight = (_pointer.transform.position - _mousePos).normalized;
-            _pointer.right = pointerRight;
+            Vector3 pointerRight = (_playerHand.Pointer.transform.position - _mousePos).normalized;
+            _playerHand.Pointer.right = pointerRight * -Mathf.Sign(_animator.transform.localScale.x);
             PointerDirection = pointerRight;
         }
 
@@ -142,14 +141,12 @@ namespace Dev
 
             RPC_JumpAnimation();
         }
-
-
+        
         [Rpc]
         private void RPC_WalkAnimation(bool walk) 
         { 
             _animator.SetBool("Walk", walk);
         }
-
 
         [Rpc]
         private void RPC_JumpAnimation()
@@ -166,7 +163,7 @@ namespace Dev
         {
             if (HasStateAuthority == false)
             {
-                _pointer.right = PointerDirection;
+                _playerHand.Pointer.right = PointerDirection;
             }
 
             if (HasInputAuthority)
@@ -182,15 +179,11 @@ namespace Dev
                 
             }
 
-            var sign = Mathf.Sign(_rigidbody.Rigidbody.velocity.x);
-
-            if (_rigidbody.Rigidbody.velocity.x == 0)
-            {
-                sign = 0;
-            }
+            var sign = Mathf.Sign(PointerDirection.x);
             
             Vector3 transformLocalScale = _bodySprite.transform.localScale;
             
+            /*
             if (sign == 1)
             {
                 transformLocalScale.x = 1;
@@ -198,7 +191,9 @@ namespace Dev
             else if(sign == -1)
             {
                 transformLocalScale.x = -1;
-            }
+            }*/
+
+            transformLocalScale.x = -sign;
 
             _bodySprite.transform.localScale = transformLocalScale;
         }

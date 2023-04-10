@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1003494977831878563}
   - component: {fileID: 1003494977831878560}
   - component: {fileID: 1003494977831878561}
+  - component: {fileID: 3129139954805000423}
   m_Layer: 0
   m_Name: Platform
   m_TagString: Untagged
@@ -198,6 +199,19 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 1003494977831878563}
   SimulationBehaviours: []
+--- !u!114 &3129139954805000423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003494977831878570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0249ed4273cb41ca9a88a8441fa6a20f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tagType: 0
 --- !u!1 &4268119951628689260
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,12 +285,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 7428d58ef2d44884ea4a37c8f471b0a4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f83ce8457519e8a46ab0d2dc6e773617, type: 3}
+  m_Color: {r: 1, g: 0.72156864, b: 0.942219, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.71, y: 0.29}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

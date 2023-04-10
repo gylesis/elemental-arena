@@ -50,7 +50,8 @@ namespace Dev.Infrastructure
             var networkInput = new NetworkInputData();
             networkInput.Horizontal = horizontal;
             networkInput.Jump = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space);
-            networkInput.Fire = Input.GetMouseButton(0);
+            networkInput.FireDown = Input.GetMouseButton(0);
+            networkInput.FireUp = Input.GetMouseButtonUp(0);
             
             Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             point.z = 0;
@@ -105,7 +106,8 @@ namespace Dev.Infrastructure
         public float Horizontal;
         public float Vertical;
         public bool Jump;
-        public bool Fire;
+        public bool FireDown;
+        public bool FireUp;
         public Vector3 MousePos;
     }
 }

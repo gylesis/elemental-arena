@@ -3,19 +3,19 @@ using Dev.Static_Data;
 using Fusion;
 using UniRx;
 using UnityEngine;
+using Zenject;
 
 namespace Dev.CommonControllers
 {
-    public class FxManager 
+    public class FxManager : NetworkContext
     {
         private FxContainer _fxContainer;
-        private NetworkRunner _runner;
 
         public static FxManager Instance { get; set; }
 
-        public FxManager(FxContainer fxContainer, NetworkRunner runner)
+        [Inject]
+        public void Init(FxContainer fxContainer)
         {
-            _runner = runner;
             if (Instance == null)
             {
                 Instance = this;
@@ -30,16 +30,17 @@ namespace Dev.CommonControllers
 
             if (tryGetEffect)
             {
-                T effect = _runner.Spawn(effectPrefab, pos, Quaternion.identity, _runner.LocalPlayer);
-
+                T effect = Runner.Spawn(effectPrefab, pos, Quaternion.identity, Object.InputAuthority);
+                
+                RPC_SetPos(effect.Object, pos);
+                
                 Observable.Timer(TimeSpan.FromSeconds(4)).Subscribe((l =>
                 {
-                    _runner.Despawn(effect.Object);
+                    Runner.Despawn(effect.Object);
                 }));
                 
             }
             
         }
-        
     }
 }

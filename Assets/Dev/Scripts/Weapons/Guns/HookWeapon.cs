@@ -10,7 +10,7 @@ namespace Dev.Weapons.Guns
         [SerializeField] private LineRenderer _lineRendererPrefab;
 
         [SerializeField] private float _hookDuration = 3f;
-
+        [SerializeField] private float _test = 2;
         private Vector3 _hookPoint;
         [Networked] private float OriginGravityScale { get; set; }
 
@@ -21,12 +21,20 @@ namespace Dev.Weapons.Guns
 
         private Player _hookedPlayer;
 
+        public override void StartShoot(float power)
+        {
+            Debug.Log($"Start shoot");
+        }
 
         public override void Shoot(Vector3 origin, Vector3 direction, float power = 1)
         {
-            var raycast = Runner.LagCompensation.Raycast(origin, (Vector2)direction, _lenght, Object.InputAuthority,
+            Debug.Log($"Shoot");
+            
+            var raycast = Runner.LagCompensation.Raycast(origin, direction * _lenght, _lenght, Object.InputAuthority,
                 out var hit, _layerMask);
 
+            Debug.DrawRay(origin, direction * _lenght, Color.black, 5);
+            
             if (raycast)
             {
                 RPC_SetPlayer(Runner.GetPlayerObject(Object.InputAuthority).GetComponent<Player>());

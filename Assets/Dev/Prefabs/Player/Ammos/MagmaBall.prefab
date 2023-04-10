@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 2
   _rigidbody: {fileID: 306556291203236144}
+  _collider: {fileID: 3978403882344680796}
 --- !u!114 &306556291203236146
 MonoBehaviour:
   m_ObjectHideFlags: 0

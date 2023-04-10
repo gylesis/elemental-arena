@@ -1,6 +1,7 @@
 ﻿using Dev.Weapons.Guns;
 using Dev.Weapons.View;
 using Fusion;
+using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Dev.Weapons
         private Player _player;
 
         public bool AllowToShoot { get; set; } = true;
-        public Weapon CurrentWeapon { get; set; }
+        [Networked] [CanBeNull] public Weapon CurrentWeapon { get; set; }
 
         public Subject<Weapon> WeaponChanged { get; } = new Subject<Weapon>();
 
@@ -38,27 +39,29 @@ namespace Dev.Weapons
             {
                 var shootDelay = CurrentWeapon.ShootDelay;
 
-                if (shootDelay != 0 && CurrentWeapon.ShootDelayTimer.IsRunning == false)
+                if (shootDelay == 0)
+                {
+                    Shoot(originPos, direction);
+                }
+                else if (CurrentWeapon.ShootDelayTimer.IsRunning == false)
                 {
                     CurrentWeapon.ShootDelayTimer = TickTimer.CreateFromSeconds(Runner, shootDelay);
-                }
-                else if (CurrentWeapon.ShootDelayTimer.ExpiredOrNotRunning(Runner))
-                {
-                    Shoot(originPos, direction, 1);
                 }
             }
         }
 
-        public void TryToFireClickedDown(Vector3 originPos, Vector3 direction)
+        public void TryToFireClickedUp(Vector3 originPos, Vector3 direction)
         {
-            if(CurrentWeapon.ShootDelay == 0) return;
+            var shootDelay = CurrentWeapon.ShootDelay;
+
+            if (shootDelay == 0) return;
 
             AllowToShoot = CurrentWeapon.CooldownTimer.ExpiredOrNotRunning(Runner);
 
             if (AllowToShoot)
             {
-                var power = CurrentWeapon.ShootDelayTimer.RemainingTime(Runner) / CurrentWeapon.ShootDelay;
-                    
+                var power = CurrentWeapon.ShootDelayTimer.RemainingTime(Runner) / shootDelay;
+
                 Shoot(originPos, direction, 1 - power.Value);
             }
         }
@@ -67,15 +70,15 @@ namespace Dev.Weapons
         {
             var cooldown = CurrentWeapon.Cooldown;
 
-            Debug.Log($"Power {power}");
-            
+            //Debug.Log($"Power {power}");
+
             CurrentWeapon.Shoot(originPos, direction, power);
             CurrentWeapon.CooldownTimer = TickTimer.CreateFromSeconds(Runner, cooldown);
             CurrentWeapon.ShootDelayTimer = TickTimer.None;
 
             _weaponUiView.ShootReloadView(cooldown, cooldown);
         }
-        
+
         public override void FixedUpdateNetwork()
         {
             if (Object.HasInputAuthority == false) return;
@@ -84,7 +87,10 @@ namespace Dev.Weapons
 
             if (CurrentWeapon.ShootDelayTimer.IsRunning)
             {
-                CurrentWeapon.StartShoot();
+                var power = CurrentWeapon.ShootDelayTimer.RemainingTime(Runner) / CurrentWeapon.ShootDelay;
+
+                var powerValue = 1 - power.Value;
+                CurrentWeapon.StartShoot(powerValue);
             }
         }
 

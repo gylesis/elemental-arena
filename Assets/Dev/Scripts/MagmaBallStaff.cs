@@ -1,5 +1,7 @@
-﻿using Fusion;
+﻿using System;
+using Fusion;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Dev
 {
@@ -8,33 +10,58 @@ namespace Dev
         [SerializeField] private MagmaBallShard _magmaBallShardPrefab;
         [SerializeField] private float _shardsForcePower = 2f;
         [SerializeField] private float _shardsLifeTime = 2f;
-        [SerializeField] private Transform _aimPoint;
-        
-        public override void StartShoot()
-        {
 
-                
+        public override void StartShoot(float power)
+        {
+            if (_spawnedProjectile == null)
+            {
+                Vector3 origin = _shootPoint.position;
+
+                Debug.Log($"{Object.InputAuthority}: Spawn Projectile \n Has state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
+
+                SpawnProjectile(origin, Quaternion.identity);
+            }
+            else
+            {
+                _spawnedProjectile.transform.position = _shootPoint.position;
+                _spawnedProjectile.transform.localScale = Vector3.one * (power + 1);
+            }
         }   
 
         public override void Shoot(Vector3 origin, Vector3 direction, float power = 1)
         {
+            Debug.Log($"{Object.InputAuthority}: Shoot \n Has state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
+                
+            if(Object.HasStateAuthority == false) return;
+            
             var setupContext = new WeaponAmmonSetupContext();
             setupContext.Direction = direction;
-            setupContext.Force = _forcePower;
             setupContext.Power = power;
+            setupContext.Force = _forcePower;
 
-            SpawnProjectile(origin, Quaternion.identity, setupContext);
+            var magmaBall = _spawnedProjectile.GetComponent<MagmaBall>();
+            
+            magmaBall.Collider.enabled = true;
+            magmaBall.Rigidbody.Rigidbody.isKinematic = false;
+            
+            DestroyTimer = TickTimer.CreateFromSeconds(Runner, _explosionTime);
+            
+            magmaBall.Setup(setupContext);
         }
 
-        protected override void OnProjectileBeforeSpawned(MagmaBall projectile, WeaponAmmonSetupContext setupContext)
+        protected override void OnProjectileBeforeSpawned(MagmaBall projectile)
         {
-            projectile.transform.localScale *= setupContext.Power + 1;
-            projectile.Setup(setupContext);
+            Debug.Log($"{Object.InputAuthority}: Projectile before spawned \nHas state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
+
+            projectile.Collider.enabled = false;
+            projectile.Rigidbody.Rigidbody.isKinematic = true;
+
+            _spawnedProjectile = projectile.Object;
         }
 
-        protected override void DestroyAmmo(MagmaBall projectile)
+        protected override void DestroyAmmo(WeaponAmmo magmaBall)
         {
-            int shardsAmount = Random.Range(3, 7);
+            int shardsAmount = Random.Range(3, 7);  
 
             for (int i = 0; i < shardsAmount; i++)
             {
@@ -42,7 +69,7 @@ namespace Dev
                 setupContext.Direction = Random.insideUnitCircle;
                 setupContext.Force = _shardsForcePower;
 
-                Vector3 spawnPos = projectile.transform.position + setupContext.Direction * 1.05f;
+                Vector3 spawnPos = magmaBall.transform.position + setupContext.Direction * 1.05f;
 
                 SpawnAdditionalProjectile(_magmaBallShardPrefab, spawnPos, Quaternion.identity,
                     setupContext, (runner, o) =>
@@ -51,7 +78,7 @@ namespace Dev
                     });  
             }
 
-            base.DestroyAmmo(projectile);
+            base.DestroyAmmo(magmaBall);
         }
     }
 }

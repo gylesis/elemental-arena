@@ -10,7 +10,9 @@ namespace Dev
     public abstract class ProjectileWeaponAmmo<TProjectileType> : WeaponAmmo where TProjectileType : WeaponAmmo
     {
         [SerializeField] protected NetworkRigidbody2D _rigidbody;
-    
+
+        public NetworkRigidbody2D Rigidbody => _rigidbody;
+
         public Subject<TProjectileType> Collision { get; set; } = new Subject<TProjectileType>();
         
         public void Explode(LayerMask layerMask, float explosionRadius)
@@ -39,15 +41,7 @@ namespace Dev
             }
         }
 
-        protected bool OverlapSphere(Vector3 pos, float radius, LayerMask layerMask, out List<LagCompensatedHit> hits)
-        {
-            hits = new List<LagCompensatedHit>();
-
-            Runner.LagCompensation.OverlapSphere(pos, radius, Object.InputAuthority,
-                hits, layerMask);
-
-            return hits.Count > 0;
-        }
+        
         
     }
 }
