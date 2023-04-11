@@ -1,6 +1,8 @@
 ﻿using Dev.CommonControllers;
 using Dev.Infrastructure;
+using Fusion;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace Dev
@@ -9,6 +11,7 @@ namespace Dev
     {
         private WeaponCraftStation _weaponCraftStation;
         private PlayersSpawner _playersSpawner;
+        
 
         [Inject]
         private void Init(WeaponCraftStation weaponCraftStation, PlayersSpawner playersSpawner)
@@ -17,30 +20,23 @@ namespace Dev
             _weaponCraftStation = weaponCraftStation;
         }
 
-        public override void FixedUpdateNetwork()
-        {
-            if (GetInput(out NetworkInputData inputData))
-            {
-                if (inputData.CraftWeaponKeyCode1 || inputData.CraftWeaponKeyCode2 ||inputData.CraftWeaponKeyCode3 ||inputData.CraftWeaponKeyCode4)
-                {
-                    Debug.Log($"Craft");
-                    var tryGetPlayer = _playersSpawner.TryGetPlayer(Object.InputAuthority, out var player);
+        public void TryCraft(PlayerRef playerRef)
+        {   
+            Debug.Log($"TryCraft");
+            var tryGetPlayer = _playersSpawner.TryGetPlayer(playerRef, out var player);
 
-                    if (tryGetPlayer)
-                    {
-                        var craftContext = new WeaponCraftContext();
-                        craftContext.Runner = Runner;
-                        craftContext.FirstElement = ElementType.Earth;
-                        craftContext.SecondElement = ElementType.Fire;
-                        craftContext.WeaponSpawnParent = player.WeaponParent;
-                        craftContext.Player = player;
+            if (tryGetPlayer == false) return;
+
+            var craftContext = new WeaponCraftContext();
+
+            craftContext.Runner = Runner;
+            craftContext.FirstElement = player.ElementsState.GetElement(1);
+            craftContext.SecondElement = player.ElementsState.GetElement(2);
+            craftContext.WeaponSpawnParent = player.WeaponParent;
+            craftContext.Player = player;
                             
-                        _weaponCraftStation.Craft(craftContext);
-                    }
-                }
-            }
+            _weaponCraftStation.TryCraft(craftContext);
         }
+        
     }
-    
-    
 }

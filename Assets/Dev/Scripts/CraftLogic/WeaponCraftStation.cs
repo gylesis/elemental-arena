@@ -16,7 +16,7 @@ namespace Dev
             _weaponCraftRecipesContainer = weaponCraftRecipesContainer;
         }
 
-        public void Craft(WeaponCraftContext craftContext)
+        public void TryCraft(WeaponCraftContext craftContext)
         {
             ElementType firstElement = craftContext.FirstElement;
             ElementType secondElement = craftContext.SecondElement;
@@ -43,12 +43,33 @@ namespace Dev
 
             Weapon weaponPrefab = weaponStaticData.WeaponPrefab;
 
-            Weapon weapon = runner.Spawn(weaponPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer);
+            var hasWeapon = player.WeaponController.HasWeapon(weaponStaticData.Name);
+            
+            if(hasWeapon)
+            {
+                Debug.Log($"Weapon is already in use!");
+                return;
+            }
 
-            player.WeaponController.Weapons.Add(weapon);
+            Weapon weapon = runner.Spawn(weaponPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer, (OnBeforeSpawned ));
+
+            void OnBeforeSpawned(NetworkRunner networkRunner, NetworkObject obj)
+            {
+                var weapon = obj.GetComponent<Weapon>();
+                var weaponData = new WeaponData();
+                
+                weaponData.Id = weaponStaticData.GetHashCode();
+                weaponData.Name = weaponStaticData.WeaponPrefab.name;
+                
+                weapon.Init(weaponData);
+            }
+
+            player.WeaponController.RPC_AddWeapon(weapon);
+            player.WeaponController.RPC_ChooseWeapon(player.WeaponController.WeaponsAmount);
 
             weapon.RPC_SetParent(weapon.Object, craftContext.WeaponSpawnParent);
             weapon.RPC_SetLocalPos(weapon.Object, Vector3.zero);
         }
+        
     }
 }

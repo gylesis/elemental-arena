@@ -19,11 +19,13 @@ namespace Dev
         [SerializeField] private Animator _animator;
         [SerializeField] private WeaponController _weaponController;
         [SerializeField] private PlayerHand _playerHand;
-        
+        [SerializeField] private PlayerChosenElementsState _elementsState;
+
+        public PlayerChosenElementsState ElementsState => _elementsState;
+
         private Vector3 _mousePos;
         public NetworkRigidbody2D Rigidbody => _rigidbody;
         public NetworkObject WeaponParent => _weaponParent;
-
         public WeaponController WeaponController => _weaponController;
 
         [Networked(OnChanged = nameof(OnChangeColor))]
@@ -33,7 +35,7 @@ namespace Dev
         [Networked] private Vector3 PointerDirection { get; set; }
 
         [HideInInspector] [Networked] public NetworkBool AllowToMove { get; set; } = true;
-        
+
         public Action<PlayerRef, PlayerRef> Damaged { get; set; }
 
         private KeyCode[] _keyCodes =
@@ -51,7 +53,7 @@ namespace Dev
 
         private static readonly int JumpName = Animator.StringToHash("Jump");
         private static readonly int Fall = Animator.StringToHash("Fall");
-        private bool _firePressed;
+        private WeaponCrafter _weaponCrafter;
 
         public override void Spawned() // wrong, need to do it locally
         {
@@ -59,7 +61,7 @@ namespace Dev
             {
                 Color = Color.red;
 
-               // _weaponController.WeaponChanged.Subscribe((OnWeaponChanged));
+                // _weaponController.WeaponChanged.Subscribe((OnWeaponChanged));
             }
             else
             {
@@ -84,28 +86,39 @@ namespace Dev
 
                 if (inputData.FireDown)
                 {
-                    Vector3 direction = (_mousePos -  _weaponController.CurrentWeapon.ShootPoint.position).normalized;
-                    Vector3 origin =  _weaponController.CurrentWeapon.ShootPoint.position;
+                    Vector3 direction = (_mousePos - _weaponController.CurrentWeapon.ShootPoint.position).normalized;
+                    Vector3 origin = _weaponController.CurrentWeapon.ShootPoint.position;
 
                     _weaponController.TryToFire(origin, direction);
                 }
 
                 if (inputData.FireUp)
                 {
-                    Vector3 direction = (_mousePos -  _weaponController.CurrentWeapon.ShootPoint.position).normalized;
-                    Vector3 origin =  _weaponController.CurrentWeapon.ShootPoint.position;
+                    Vector3 direction = (_mousePos - _weaponController.CurrentWeapon.ShootPoint.position).normalized;
+                    Vector3 origin = _weaponController.CurrentWeapon.ShootPoint.position;
 
                     _weaponController.TryToFireClickedUp(origin, direction);
                 }
-                else if (_weaponController.CurrentWeapon != null && _weaponController.CurrentWeapon.ShootDelayTimer.Expired(Runner))
+                else if (_weaponController.CurrentWeapon != null &&
+                         _weaponController.CurrentWeapon.ShootDelayTimer.Expired(Runner))
                 {
-                    Vector3 direction = (_mousePos -  _weaponController.CurrentWeapon.ShootPoint.position).normalized;
-                    Vector3 origin =  _weaponController.CurrentWeapon.ShootPoint.position;
+                    Vector3 direction = (_mousePos - _weaponController.CurrentWeapon.ShootPoint.position).normalized;
+                    Vector3 origin = _weaponController.CurrentWeapon.ShootPoint.position;
 
                     _weaponController.TryToFireClickedUp(origin, direction);
                 }
-                
-                if(AllowToMove == false) return;
+
+                if (inputData.ToCraft)
+                {
+                    if (_weaponCrafter == null)
+                    {
+                        _weaponCrafter = FindObjectOfType<WeaponCrafter>();
+                    }
+
+                    _weaponCrafter.TryCraft(Object.InputAuthority);
+                }
+
+                if (AllowToMove == false) return;
 
                 if (Mathf.Approximately(inputData.Horizontal, 0))
                 {
@@ -143,10 +156,10 @@ namespace Dev
 
             RPC_JumpAnimation();
         }
-        
+
         [Rpc]
-        private void RPC_WalkAnimation(bool walk) 
-        { 
+        private void RPC_WalkAnimation(bool walk)
+        {
             _animator.SetBool("Walk", walk);
         }
 
@@ -155,10 +168,7 @@ namespace Dev
         {
             _animator.SetTrigger(JumpName);
 
-            Observable.Timer(TimeSpan.FromSeconds(0.5f)).Subscribe((l =>
-            {
-                _animator.SetTrigger(Fall);
-            }));
+            Observable.Timer(TimeSpan.FromSeconds(0.5f)).Subscribe((l => { _animator.SetTrigger(Fall); }));
         }
 
         public override void Render()
@@ -178,13 +188,12 @@ namespace Dev
                         _weaponController.RPC_ChooseWeapon(numberPressed);
                     }
                 }
-                
             }
 
             var sign = Mathf.Sign(PointerDirection.x);
-            
+
             Vector3 transformLocalScale = _bodySprite.transform.localScale;
-            
+
             /*
             if (sign == 1)
             {
@@ -202,7 +211,7 @@ namespace Dev
 
         private static void OnChangeColor(Changed<Player> changed)
         {
-           // changed.Behaviour._bodySprite.color = changed.Behaviour.Color;
+            // changed.Behaviour._bodySprite.color = changed.Behaviour.Color;
         }
     }
 }

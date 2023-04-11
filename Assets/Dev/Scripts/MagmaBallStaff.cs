@@ -16,7 +16,7 @@ namespace Dev
             {
                 Vector3 origin = _shootPoint.position;
 
-                Debug.Log($"{Object.InputAuthority}: Spawn Projectile \n Has state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
+               // Debug.Log($"{Object.InputAuthority}: Spawn Projectile \n Has state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
 
                 SpawnProjectile(origin, Quaternion.identity);
             }
@@ -28,7 +28,7 @@ namespace Dev
 
         public override void Shoot(Vector3 origin, Vector3 direction, float power = 1)
         {
-            Debug.Log($"{Object.InputAuthority}: Shoot \n Has state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
+            //Debug.Log($"{Object.InputAuthority}: Shoot \n Has state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
                 
             if(Object.HasStateAuthority == false) return;
             
@@ -51,7 +51,7 @@ namespace Dev
 
         protected override void OnProjectileBeforeSpawned(MagmaBall projectile)
         {
-            Debug.Log($"{Object.InputAuthority}: Projectile before spawned \nHas state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
+            //Debug.Log($"{Object.InputAuthority}: Projectile before spawned \nHas state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
 
             projectile.Collider.enabled = false;
             projectile.Rigidbody.Rigidbody.isKinematic = true;

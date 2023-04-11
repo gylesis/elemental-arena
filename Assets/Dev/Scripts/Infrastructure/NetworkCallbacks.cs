@@ -29,10 +29,6 @@ namespace Dev.Infrastructure
             {
                 Player spawnedPlayer = _playersSpawner.SpawnPlayer(player);
 
-                WeaponCrafter craftStation = FindObjectOfType<WeaponCrafter>();
-                
-                craftStation.Object.AssignInputAuthority(player);
-
                 _scoreboard.RPC_AddPlayer(spawnedPlayer);
             }
         }
@@ -63,10 +59,7 @@ namespace Dev.Infrastructure
 
             networkInput.MousePos = point;
 
-            networkInput.CraftWeaponKeyCode1 = Input.GetKeyDown(KeyCode.Alpha1);
-            networkInput.CraftWeaponKeyCode2 = Input.GetKeyDown(KeyCode.Alpha2);
-            networkInput.CraftWeaponKeyCode3 = Input.GetKeyDown(KeyCode.Alpha3);
-            networkInput.CraftWeaponKeyCode4 = Input.GetKeyDown(KeyCode.Alpha4);
+            networkInput.ToCraft = Input.GetKeyDown(KeyCode.C);
             
             input.Set(networkInput);
         }
@@ -119,10 +112,7 @@ namespace Dev.Infrastructure
         public bool FireDown;
         public bool FireUp;
         public Vector3 MousePos;
-        
-        public bool CraftWeaponKeyCode1;
-        public bool CraftWeaponKeyCode2;
-        public bool CraftWeaponKeyCode3;
-        public bool CraftWeaponKeyCode4;
+
+        public bool ToCraft;
     }
 }   

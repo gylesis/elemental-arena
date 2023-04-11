@@ -20,7 +20,13 @@ namespace Dev.Weapons.Guns
         public float Damage => _damage;
         public float ShootDelay => _shootDelay;
         public Transform ShootPoint => _shootPoint;
-
+        public WeaponData WeaponData { get; private set; }
+        
+        public void Init(WeaponData weaponData)
+        {
+            WeaponData = weaponData;
+        }
+        
         public virtual void StartShoot(float power) { }
         public abstract void Shoot(Vector3 origin, Vector3 direction, float power = 1);
 

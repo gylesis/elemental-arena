@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Dev.Weapons.Guns;
 using Dev.Weapons.View;
 using Fusion;
@@ -12,8 +13,8 @@ namespace Dev.Weapons
     {
         [SerializeField] private List<Weapon> _weapons;
 
-        public List<Weapon> Weapons => _weapons;
-
+        public int WeaponsAmount => _weapons.Count;
+        
         private WeaponUiView _weaponUiView;
         private Player _player;
 
@@ -34,6 +35,19 @@ namespace Dev.Weapons
             RPC_SelectViewWeapon();
         }
 
+        public bool HasWeapon(string name)
+        {
+            Weapon weapon = _weapons.FirstOrDefault(x => x.WeaponData.Name == name);
+
+            return weapon != null;
+        }
+        
+        [Rpc]
+        public void RPC_AddWeapon(Weapon weapon)
+        {
+            _weapons.Add(weapon);
+        }
+        
         public void TryToFire(Vector3 originPos, Vector3 direction)
         {
             AllowToShoot = CurrentWeapon.CooldownTimer.ExpiredOrNotRunning(Runner);
@@ -118,11 +132,21 @@ namespace Dev.Weapons
         [Rpc]
         public void RPC_ChooseWeapon(int index)
         {
+            if(_weapons.Count == 0)
+            {
+                Debug.Log($"No weapons to choose");
+                return;
+            }
+            
             var weaponIndex = Mathf.Clamp(index - 1, 0, _weapons.Count - 1);
 
             Weapon chosenWeapon = _weapons[weaponIndex];
 
-            if (CurrentWeapon == chosenWeapon) return;
+            if (CurrentWeapon == chosenWeapon)
+            {
+                Debug.Log($"Weapon already chosen");
+                return;
+            }
 
             CurrentWeapon = chosenWeapon;
             CurrentWeapon.OnChosen();

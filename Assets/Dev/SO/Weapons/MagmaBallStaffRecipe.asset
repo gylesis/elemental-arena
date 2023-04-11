@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MagmaBallStaffRecipe
   m_EditorClassIdentifier: 
   _firstElement: 0
-  _secondElement: 1
+  _secondElement: 2

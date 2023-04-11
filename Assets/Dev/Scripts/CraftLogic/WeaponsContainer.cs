@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Dev
 {
@@ -24,6 +25,15 @@ namespace Dev
 
             return false;
         }
-        
+
+
+        private void OnValidate()
+        {
+            for (var index = 0; index < _weaponDatas.Length; index++)
+            {
+                WeaponStaticData weaponStaticData = _weaponDatas[index];
+                weaponStaticData.Name = weaponStaticData.WeaponPrefab.name;
+            }
+        }
     }
 }
