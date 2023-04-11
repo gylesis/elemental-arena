@@ -81,7 +81,6 @@ namespace Dev.Weapons.Guns
                 RPC_SetPos(lightningStrikeAmmo.Object, pos);
             }
         }
-        
 
         public override void FixedUpdateNetwork()
         {

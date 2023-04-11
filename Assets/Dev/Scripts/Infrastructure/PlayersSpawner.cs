@@ -52,5 +52,23 @@ namespace Dev.Infrastructure
 
             PlayersCount--;
         }
+
+        public bool TryGetPlayer(PlayerRef playerRef, out Player player)
+        {
+            player = null;
+            
+            foreach (var keyValuePair in _players)
+            {
+                if (keyValuePair.Key == playerRef)
+                {
+                    player = keyValuePair.Value;
+                    return true;
+                }
+            }
+
+
+            return false;
+        }
+        
     }
 }

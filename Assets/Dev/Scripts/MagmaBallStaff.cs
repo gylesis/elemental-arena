@@ -1,5 +1,4 @@
-﻿using System;
-using Fusion;
+﻿using Fusion;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,7 +22,6 @@ namespace Dev
             }
             else
             {
-                _spawnedProjectile.transform.position = _shootPoint.position;
                 _spawnedProjectile.transform.localScale = Vector3.one * (power + 1);
             }
         }   
@@ -33,6 +31,8 @@ namespace Dev
             Debug.Log($"{Object.InputAuthority}: Shoot \n Has state authority {Object.HasStateAuthority}, Input authority {Object.HasInputAuthority}");
                 
             if(Object.HasStateAuthority == false) return;
+            
+            RPC_SetParent(_spawnedProjectile, null);
             
             var setupContext = new WeaponAmmonSetupContext();
             setupContext.Direction = direction;

@@ -15,14 +15,16 @@ namespace Dev
         [SerializeField] private float _speed = 2f;
         [SerializeField] private float _jumpPower = 2;
         [SerializeField] private float _jumpCooldown = 1;
-
+        [SerializeField] private NetworkObject _weaponParent;
         [SerializeField] private Animator _animator;
-
         [SerializeField] private WeaponController _weaponController;
-
         [SerializeField] private PlayerHand _playerHand;
+        
         private Vector3 _mousePos;
         public NetworkRigidbody2D Rigidbody => _rigidbody;
+        public NetworkObject WeaponParent => _weaponParent;
+
+        public WeaponController WeaponController => _weaponController;
 
         [Networked(OnChanged = nameof(OnChangeColor))]
         public Color Color { get; set; }

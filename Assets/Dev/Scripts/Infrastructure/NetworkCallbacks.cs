@@ -11,10 +11,12 @@ namespace Dev.Infrastructure
     {
         private PlayersSpawner _playersSpawner;
         private Scoreboard _scoreboard;
+        private InputListenerDispatcher _inputListenerDispatcher;
 
         [Inject]
-        public void Init(PlayersSpawner playersSpawner, Scoreboard scoreboard)
+        public void Init(PlayersSpawner playersSpawner, Scoreboard scoreboard, InputListenerDispatcher inputListenerDispatcher)
         {
+            _inputListenerDispatcher = inputListenerDispatcher;
             _scoreboard = scoreboard;
             _playersSpawner = playersSpawner;
         }
@@ -26,7 +28,11 @@ namespace Dev.Infrastructure
             if (Runner.IsServer)
             {
                 Player spawnedPlayer = _playersSpawner.SpawnPlayer(player);
+
+                WeaponCrafter craftStation = FindObjectOfType<WeaponCrafter>();
                 
+                craftStation.Object.AssignInputAuthority(player);
+
                 _scoreboard.RPC_AddPlayer(spawnedPlayer);
             }
         }
@@ -40,7 +46,6 @@ namespace Dev.Infrastructure
                 _scoreboard.RPC_PlayerLeft(player);
                 _playersSpawner.PlayerLeft(player);
             }
-            
         }
 
         public void OnInput(NetworkRunner runner, NetworkInput input)
@@ -57,6 +62,11 @@ namespace Dev.Infrastructure
             point.z = 0;
 
             networkInput.MousePos = point;
+
+            networkInput.CraftWeaponKeyCode1 = Input.GetKeyDown(KeyCode.Alpha1);
+            networkInput.CraftWeaponKeyCode2 = Input.GetKeyDown(KeyCode.Alpha2);
+            networkInput.CraftWeaponKeyCode3 = Input.GetKeyDown(KeyCode.Alpha3);
+            networkInput.CraftWeaponKeyCode4 = Input.GetKeyDown(KeyCode.Alpha4);
             
             input.Set(networkInput);
         }
@@ -109,5 +119,10 @@ namespace Dev.Infrastructure
         public bool FireDown;
         public bool FireUp;
         public Vector3 MousePos;
+        
+        public bool CraftWeaponKeyCode1;
+        public bool CraftWeaponKeyCode2;
+        public bool CraftWeaponKeyCode3;
+        public bool CraftWeaponKeyCode4;
     }
-}
+}   

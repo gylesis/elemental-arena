@@ -1,4 +1,5 @@
-﻿using Dev.Weapons.Guns;
+﻿using System.Collections.Generic;
+using Dev.Weapons.Guns;
 using Dev.Weapons.View;
 using Fusion;
 using JetBrains.Annotations;
@@ -9,7 +10,9 @@ namespace Dev.Weapons
 {
     public class WeaponController : NetworkBehaviour
     {
-        [SerializeField] private Weapon[] _weapons;
+        [SerializeField] private List<Weapon> _weapons;
+
+        public List<Weapon> Weapons => _weapons;
 
         private WeaponUiView _weaponUiView;
         private Player _player;
@@ -115,7 +118,7 @@ namespace Dev.Weapons
         [Rpc]
         public void RPC_ChooseWeapon(int index)
         {
-            var weaponIndex = Mathf.Clamp(index - 1, 0, _weapons.Length - 1);
+            var weaponIndex = Mathf.Clamp(index - 1, 0, _weapons.Count - 1);
 
             Weapon chosenWeapon = _weapons[weaponIndex];
 

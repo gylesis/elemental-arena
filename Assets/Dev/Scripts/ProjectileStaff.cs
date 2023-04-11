@@ -21,6 +21,8 @@ namespace Dev
                 {
                     TProjectileType projectile = o.GetComponent<TProjectileType>();
 
+                    RPC_SetParent(projectile.Object, Object);
+                    
                     OnProjectileBeforeSpawned(projectile);
                 });
 

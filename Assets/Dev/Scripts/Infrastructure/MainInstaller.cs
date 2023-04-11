@@ -13,12 +13,19 @@ namespace Dev.Infrastructure
         [SerializeField] private Scoreboard _scoreboard;
         [SerializeField] private FxContainer _fxContainer;
         [SerializeField] private FxManager _fxManager;
+        [SerializeField] private WeaponCraftRecipesContainer _weaponCraftRecipesContainer;
+        [SerializeField] private WeaponsContainer _weaponsContainer;
         
         public override void InstallBindings()
         {
             var networkRunner = gameObject.AddComponent<NetworkRunner>();
             networkRunner.ProvideInput = true;
 
+            Container.Bind<WeaponCraftRecipesContainer>().FromInstance(_weaponCraftRecipesContainer).AsSingle();
+            Container.Bind<WeaponsContainer>().FromInstance(_weaponsContainer).AsSingle();
+            Container.Bind<WeaponCraftStation>().AsSingle();
+            Container.Bind<InputListenerDispatcher>().AsSingle();
+            
             Container.BindInterfacesAndSelfTo<EntryPoint>().FromSubContainerResolve().ByMethod((container =>
             {
                 var sceneManagerDefault = gameObject.AddComponent<NetworkSceneManagerDefault>();
