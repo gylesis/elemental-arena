@@ -165,8 +165,6 @@ namespace Dev.Weapons
         [Rpc]
         private void RPC_SelectViewWeapon()
         {
-            return;
-
             foreach (Weapon weapon in _weapons)
             {
                 if (weapon == CurrentWeapon)

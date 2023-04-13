@@ -44,7 +44,7 @@ namespace Dev
             magmaBall.Collider.enabled = true;
             magmaBall.Rigidbody.Rigidbody.isKinematic = false;
             
-            DestroyTimer = TickTimer.CreateFromSeconds(Runner, _explosionTime);
+            AmmoDestroyTimer = TickTimer.CreateFromSeconds(Runner, _explosionTime);
             
             magmaBall.Setup(setupContext);
         }

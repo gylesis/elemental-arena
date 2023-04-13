@@ -7,11 +7,11 @@ namespace Dev
     [Serializable]
     public class WeaponStaticData
     {
+        public string Name = "Weapon";
+        
         [SerializeField] private Recipe _recipe;
         [SerializeField] private Weapon _weaponPrefab;
 
-        public string Name = "Weapon";
-        
         public Weapon WeaponPrefab => _weaponPrefab;
 
         public bool AreRecipesMatch(Recipe targetRecipe)

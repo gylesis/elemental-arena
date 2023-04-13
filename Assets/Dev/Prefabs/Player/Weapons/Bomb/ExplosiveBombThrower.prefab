@@ -131,9 +131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  _shootPoint: {fileID: 8182221920882097830}
+  _view: {fileID: 5169465608043846157}
   _cooldown: 1
   _damage: 10
-  _view: {fileID: 5169465608043846157}
+  _shootDelay: 0
   _bombPrefab: {fileID: 3759888737431670830, guid: 444be09e7dc44a54da1263c8f9514e06, type: 3}
   _bombExplosionModifier: 15
   _deathTime: 2

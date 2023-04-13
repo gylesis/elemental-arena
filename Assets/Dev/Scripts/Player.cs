@@ -20,6 +20,9 @@ namespace Dev
         [SerializeField] private WeaponController _weaponController;
         [SerializeField] private PlayerHand _playerHand;
         [SerializeField] private PlayerChosenElementsState _elementsState;
+        [SerializeField] private NetworkObject _armorParent;
+
+        public NetworkObject ArmorParent => _armorParent;
 
         public PlayerChosenElementsState ElementsState => _elementsState;
 

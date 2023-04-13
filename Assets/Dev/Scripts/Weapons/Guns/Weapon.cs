@@ -14,8 +14,11 @@ namespace Dev.Weapons.Guns
         [SerializeField] protected float _shootDelay = 0;
         [Networked] public TickTimer CooldownTimer { get; set; }
         [Networked] public TickTimer ShootDelayTimer { get; set; }
-        [Networked] protected TickTimer DestroyTimer { get; set; }
+        [Networked] protected TickTimer AmmoDestroyTimer { get; set; }
         
+        
+        public virtual bool AllowToShoot => CooldownTimer.ExpiredOrNotRunning(Runner);
+
         public float Cooldown => _cooldown;
         public float Damage => _damage;
         public float ShootDelay => _shootDelay;
@@ -39,9 +42,10 @@ namespace Dev.Weapons.Guns
         
         protected virtual void DestroyAmmo(WeaponAmmo ammon)
         {
-            DestroyTimer = TickTimer.None;
+            AmmoDestroyTimer = TickTimer.None;
             Runner.Despawn(ammon.Object);
         }
 
     }
+
 }

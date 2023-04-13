@@ -1,4 +1,5 @@
-﻿using Fusion;
+﻿using DG.Tweening;
+using Fusion;
 using UnityEngine;
 
 namespace Dev.CommonControllers
@@ -52,7 +53,19 @@ namespace Dev.CommonControllers
         {
             gameObject.name = str;
         }
-
+        
+        [Rpc]
+        public void RPC_DoScale(NetworkObject networkObject, float duration)
+        {
+            networkObject.transform.DOScale(1, duration);
+        }
+        
+        [Rpc]
+        public void RPC_DoScale(float duration, float targetValue = 1)
+        {
+            transform.DOScale(targetValue, duration);
+        }
+        
         [Rpc]
         public void RPC_SetParent(NetworkObject networkObject, NetworkObject newParent)
         {

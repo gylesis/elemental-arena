@@ -293,9 +293,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 2
+  _shootPoint: {fileID: 6331363654013524592}
+  _view: {fileID: 3845366973315943349}
   _cooldown: 3
   _damage: 10
-  _view: {fileID: 3845366973315943349}
+  _shootDelay: 0
   _lenght: 99
   _layerMask:
     serializedVersion: 2
@@ -303,6 +305,7 @@ MonoBehaviour:
   _hookPower: 850
   _lineRendererPrefab: {fileID: 7033591059789995207}
   _hookDuration: 3
+  _test: 2
 --- !u!114 &-1419035667574876303
 MonoBehaviour:
   m_ObjectHideFlags: 0

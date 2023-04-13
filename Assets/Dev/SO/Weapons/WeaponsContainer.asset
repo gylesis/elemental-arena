@@ -19,3 +19,6 @@ MonoBehaviour:
   - _recipe: {fileID: 11400000, guid: e7f7fd69e2651fb4aa38e5816b4b8b4f, type: 2}
     _weaponPrefab: {fileID: 1836156051, guid: 9b6b9df4893804a4b947b51d1bfb9679, type: 3}
     Name: LightningStrikeStaff
+  - _recipe: {fileID: 11400000, guid: 194b4a90e3a84a34486bbb1e898cb77d, type: 2}
+    _weaponPrefab: {fileID: 8241856845331819597, guid: 9c096bb288213be4d91bff88be33de7f, type: 3}
+    Name: EarthArmorStaff

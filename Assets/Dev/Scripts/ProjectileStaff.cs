@@ -57,7 +57,7 @@ namespace Dev
             
             if (Object.HasStateAuthority == false) return;
 
-            if (DestroyTimer.Expired(Runner))
+            if (AmmoDestroyTimer.Expired(Runner))
             {
                 DestroyAmmo(SpawnedProjectile.GetComponent<TProjectileType>());
             }

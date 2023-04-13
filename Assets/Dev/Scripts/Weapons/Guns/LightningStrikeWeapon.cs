@@ -73,7 +73,7 @@ namespace Dev.Weapons.Guns
                     ammonSetupContext.Power = 1;
 
                     PreparationTimer = TickTimer.CreateFromSeconds(Runner, _preparationTime);
-                    DestroyTimer = TickTimer.CreateFromSeconds(Runner, _deathTime);
+                    AmmoDestroyTimer = TickTimer.CreateFromSeconds(Runner, _deathTime);
 
                     _lightningStrikeAmmo.Setup(ammonSetupContext, _preparationTime, _strikeExplosionTimer, _explosionForcePower);
                 })));
@@ -96,9 +96,9 @@ namespace Dev.Weapons.Guns
                     _lightningStrikeAmmo.RPC_Explode();
                 }
                 
-                if (DestroyTimer.Expired(Runner))
+                if (AmmoDestroyTimer.Expired(Runner))
                 {
-                    DestroyTimer = TickTimer.None;
+                    AmmoDestroyTimer = TickTimer.None;
                     
                     DestroyAmmo(_lightningStrikeAmmo);
                 }
