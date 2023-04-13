@@ -15,3 +15,7 @@ MonoBehaviour:
   _weaponDatas:
   - _recipe: {fileID: 11400000, guid: 73e4efe51e0bab44c88b25d158116428, type: 2}
     _weaponPrefab: {fileID: 8542732174907136121, guid: cb0dbe29e8c972946ae29e96973556fb, type: 3}
+    Name: MagmaBallStaff
+  - _recipe: {fileID: 11400000, guid: e7f7fd69e2651fb4aa38e5816b4b8b4f, type: 2}
+    _weaponPrefab: {fileID: 1836156051, guid: 9b6b9df4893804a4b947b51d1bfb9679, type: 3}
+    Name: LightningStrikeStaff

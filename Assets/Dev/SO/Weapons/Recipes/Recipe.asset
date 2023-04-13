@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f55bd18fef244b0990a182309a1d956e, type: 3}
-  m_Name: WeaponCraftRecipes
+  m_Script: {fileID: 11500000, guid: 893036d9f5ff495bafb00e50d3c35971, type: 3}
+  m_Name: Recipe
   m_EditorClassIdentifier: 
-  _recipes:
-  - {fileID: 11400000, guid: 73e4efe51e0bab44c88b25d158116428, type: 2}
-  - {fileID: 11400000, guid: e7f7fd69e2651fb4aa38e5816b4b8b4f, type: 2}
+  _firstElement: 0
+  _secondElement: 2

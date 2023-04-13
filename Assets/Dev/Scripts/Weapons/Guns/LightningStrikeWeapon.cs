@@ -10,6 +10,8 @@ namespace Dev.Weapons.Guns
 
         [SerializeField] private float _deathTime = 1.5f;
         [SerializeField] private float _preparationTime = 0.5f;
+        [SerializeField] private float _strikeExplosionTimer = 2f;
+        [SerializeField] private float _explosionForcePower = 10f;
         
         [SerializeField] private LightningStrikeAmmo _lightningStrikeAmmoPrefab;
 
@@ -35,7 +37,7 @@ namespace Dev.Weapons.Guns
 
                     GameObject hitGameObject = hit.GameObject;
 
-                    Debug.Log($"{hitGameObject}", hitGameObject);
+                    //Debug.Log($"{hitGameObject}", hitGameObject);
                         
                     var tryGetComponent = hitGameObject.TryGetComponent<CustomTag>(out var tag);
 
@@ -73,7 +75,7 @@ namespace Dev.Weapons.Guns
                     PreparationTimer = TickTimer.CreateFromSeconds(Runner, _preparationTime);
                     DestroyTimer = TickTimer.CreateFromSeconds(Runner, _deathTime);
 
-                    _lightningStrikeAmmo.Setup(ammonSetupContext);
+                    _lightningStrikeAmmo.Setup(ammonSetupContext, _preparationTime, _strikeExplosionTimer, _explosionForcePower);
                 })));
 
             if (Object.HasStateAuthority)

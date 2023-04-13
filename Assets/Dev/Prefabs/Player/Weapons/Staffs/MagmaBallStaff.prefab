@@ -31,6 +31,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: MagmaBallStaff
       objectReference: {fileID: 0}
+    - target: {fileID: 6884805721280001215, guid: f468eaf1db86eb74fb2cb459b01dfa69, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6884805721280001215, guid: f468eaf1db86eb74fb2cb459b01dfa69, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6884805721280001215, guid: f468eaf1db86eb74fb2cb459b01dfa69, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7883254732158562891, guid: f468eaf1db86eb74fb2cb459b01dfa69, type: 3}
       propertyPath: m_RootOrder
       value: 0
