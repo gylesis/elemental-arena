@@ -219,7 +219,7 @@ MonoBehaviour:
   _lenght: 99
   _layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 1
   _affordableDotValue: 0.4
   _deathTime: 1.5
   _preparationTime: 0.5
