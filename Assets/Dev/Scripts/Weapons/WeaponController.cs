@@ -51,7 +51,7 @@ namespace Dev.Weapons
         
         public void TryToFire(Vector3 originPos, Vector3 direction)
         {
-            AllowToShoot = CurrentWeapon.CooldownTimer.ExpiredOrNotRunning(Runner);
+            AllowToShoot = CurrentWeapon.AllowToShoot;
 
             if (AllowToShoot)
             {

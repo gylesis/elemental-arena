@@ -54,6 +54,8 @@ namespace Dev.CraftLogic
 
             Weapon weapon = runner.Spawn(weaponPrefab, Vector3.zero, Quaternion.identity, runner.LocalPlayer, (OnBeforeSpawned ));
 
+            weapon.Object.AssignInputAuthority(player.Object.InputAuthority);
+            
             void OnBeforeSpawned(NetworkRunner networkRunner, NetworkObject obj)
             {
                 var weapon = obj.GetComponent<Weapon>();
