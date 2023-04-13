@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     [CreateAssetMenu(menuName = "StaticData/Crafts/WeaponRecipe", fileName = "WeaponRecipe", order = 0)]
     public class Recipe : ScriptableObject  

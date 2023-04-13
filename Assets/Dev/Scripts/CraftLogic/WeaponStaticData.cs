@@ -2,7 +2,7 @@
 using Dev.Weapons.Guns;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     [Serializable]
     public class WeaponStaticData

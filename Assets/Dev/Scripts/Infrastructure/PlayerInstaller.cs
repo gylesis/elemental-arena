@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Dev.PlayerLogic;
+using Zenject;
 
 namespace Dev.Infrastructure
 {

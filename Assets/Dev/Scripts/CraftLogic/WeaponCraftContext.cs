@@ -1,6 +1,7 @@
-﻿using Fusion;
+﻿using Dev.PlayerLogic;
+using Fusion;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     public struct WeaponCraftContext
     {

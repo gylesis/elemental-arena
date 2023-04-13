@@ -1,11 +1,9 @@
 ﻿using Dev.CommonControllers;
 using Dev.Infrastructure;
 using Fusion;
-using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     public class WeaponCrafter : NetworkContext
     {

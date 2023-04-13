@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Dev.CommonControllers;
+using Dev.PlayerLogic;
 using Fusion;
 using UniRx;
 using Unity.Mathematics;

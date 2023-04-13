@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using Dev.CommonControllers;
 using Dev.Infrastructure;
-using Dev.UI;
+using Dev.PlayerLogic;
+using Dev.Utils;
 using Fusion;
 using UniRx;
 using UnityEngine;
 using Zenject;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     [OrderAfter(typeof(PlayerChosenElementsState))]
     public class ElementsView : NetworkContext

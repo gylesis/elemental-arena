@@ -1,4 +1,6 @@
-﻿namespace Dev.Weapons.Guns
+﻿using Dev.CraftLogic;
+
+namespace Dev.Weapons.Guns
 {
     public struct WeaponData
     {

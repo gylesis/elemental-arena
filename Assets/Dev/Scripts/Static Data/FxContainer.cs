@@ -1,4 +1,5 @@
 ﻿using System;
+using Dev.Fx;
 using UnityEngine;
 
 namespace Dev.Static_Data

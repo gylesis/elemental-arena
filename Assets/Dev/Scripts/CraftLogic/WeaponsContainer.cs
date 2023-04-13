@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     [CreateAssetMenu(menuName = "StaticData/WeaponsContainer", fileName = "WeaponsContainer", order = 0)]
     public class WeaponsContainer : ScriptableObject

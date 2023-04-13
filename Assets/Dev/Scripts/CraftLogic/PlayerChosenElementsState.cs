@@ -3,7 +3,7 @@ using Dev.CommonControllers;
 using Fusion;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     public class PlayerChosenElementsState : NetworkContext
     {

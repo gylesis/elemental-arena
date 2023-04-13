@@ -3,7 +3,7 @@ using System.Linq;
 using Dev.Infrastructure;
 using Fusion;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     public class InputListenerDispatcher
     {

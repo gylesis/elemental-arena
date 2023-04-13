@@ -1,8 +1,9 @@
-﻿using Dev.Weapons.Guns;
+﻿using Dev.PlayerLogic;
+using Dev.Weapons.Guns;
 using Fusion;
 using UnityEngine;
 
-namespace Dev
+namespace Dev.CraftLogic
 {
     public class WeaponCraftStation
     {

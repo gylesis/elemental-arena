@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Dev.Utils;
+using UnityEngine;
 
 namespace Dev.Weapons.Guns
 {
