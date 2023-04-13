@@ -9,7 +9,6 @@ namespace Dev
     {
         private Queue<ElementType> _elementTypesStack = new Queue<ElementType>(2);
 
-
         public override void Spawned()
         {
             RPC_SetElementTypeValue(ElementType.Electricity);

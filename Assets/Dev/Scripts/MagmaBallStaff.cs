@@ -12,7 +12,7 @@ namespace Dev
 
         public override void StartShoot(float power)
         {
-            if (_spawnedProjectile == null)
+            if (SpawnedProjectile == null)
             {
                 Vector3 origin = _shootPoint.position;
 
@@ -22,7 +22,7 @@ namespace Dev
             }
             else
             {
-                _spawnedProjectile.transform.localScale = Vector3.one * (power + 1);
+                SpawnedProjectile.transform.localScale = Vector3.one * (power + 1);
             }
         }   
 
@@ -32,14 +32,14 @@ namespace Dev
                 
             if(Object.HasStateAuthority == false) return;
             
-            RPC_SetParent(_spawnedProjectile, null);
+            RPC_SetParent(SpawnedProjectile, null);
             
             var setupContext = new WeaponAmmonSetupContext();
             setupContext.Direction = direction;
             setupContext.Power = power;
             setupContext.Force = _forcePower;
 
-            var magmaBall = _spawnedProjectile.GetComponent<MagmaBall>();
+            var magmaBall = SpawnedProjectile.GetComponent<MagmaBall>();
             
             magmaBall.Collider.enabled = true;
             magmaBall.Rigidbody.Rigidbody.isKinematic = false;
@@ -56,7 +56,7 @@ namespace Dev
             projectile.Collider.enabled = false;
             projectile.Rigidbody.Rigidbody.isKinematic = true;
 
-            _spawnedProjectile = projectile.Object;
+            SpawnedProjectile = projectile.Object;
         }
 
         protected override void DestroyAmmo(WeaponAmmo magmaBall)

@@ -12,7 +12,7 @@ namespace Dev
         [SerializeField] protected float _explosionRadius = 2f;
         [SerializeField] protected float _explosionTime = 2f;
 
-        [Networked] protected NetworkObject _spawnedProjectile { get; set; }
+        [Networked] protected NetworkObject SpawnedProjectile { get; set; }
 
         protected void SpawnProjectile(Vector3 pos, Quaternion rotation)
         {
@@ -21,14 +21,14 @@ namespace Dev
                 {
                     TProjectileType projectile = o.GetComponent<TProjectileType>();
 
-                    RPC_SetParent(projectile.Object, Object);
+                    projectile.RPC_SetParent(Object);
                     
                     OnProjectileBeforeSpawned(projectile);
                 });
 
             if (Object.HasStateAuthority)
             {
-                _spawnedProjectile = projectileType.Object;
+                SpawnedProjectile = projectileType.Object;
             }
         }
         protected void SpawnAdditionalProjectile<TProjectile>(TProjectile projectilePrefab, Vector3 pos,
@@ -59,7 +59,7 @@ namespace Dev
 
             if (DestroyTimer.Expired(Runner))
             {
-                DestroyAmmo(_spawnedProjectile.GetComponent<TProjectileType>());
+                DestroyAmmo(SpawnedProjectile.GetComponent<TProjectileType>());
             }
         }
 

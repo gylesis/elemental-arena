@@ -64,11 +64,14 @@ namespace Dev
                 weapon.Init(weaponData);
             }
 
+            Debug.Log($"Crafted Weapon: {weaponStaticData.Name}");
+            
             player.WeaponController.RPC_AddWeapon(weapon);
             player.WeaponController.RPC_ChooseWeapon(player.WeaponController.WeaponsAmount);
 
-            weapon.RPC_SetParent(weapon.Object, craftContext.WeaponSpawnParent);
-            weapon.RPC_SetLocalPos(weapon.Object, Vector3.zero);
+            weapon.RPC_SetParent(craftContext.WeaponSpawnParent);
+            weapon.RPC_SetLocalPos(Vector3.zero);
+            weapon.RPC_SetRotation(Vector3.zero);
         }
         
     }

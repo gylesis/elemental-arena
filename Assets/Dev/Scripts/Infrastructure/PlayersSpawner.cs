@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
+using Dev.CommonControllers;
 using Fusion;
+using UniRx;
 using Unity.Mathematics;
 using UnityEngine;
 using Zenject;
 
 namespace Dev.Infrastructure
 {
-    public class PlayersSpawner : NetworkBehaviour
+    public class PlayersSpawner : NetworkContext
     {
         [SerializeField] private NetworkObject _playerPrefab;
 
@@ -16,6 +18,8 @@ namespace Dev.Infrastructure
         private NetworkRunner _networkRunner;
 
         private Dictionary<PlayerRef, Player> _players = new Dictionary<PlayerRef, Player>();
+
+        public Subject<Player> Spawned { get; } = new Subject<Player>();
 
         [Inject]
         public void Init(NetworkRunner networkRunner)
@@ -27,21 +31,32 @@ namespace Dev.Infrastructure
         {
             var playersLength = PlayersCount;
             
-            var spawnedPlayer = _networkRunner.Spawn(_playerPrefab, Vector2.zero + Vector2.right * playersLength, quaternion.identity, playerRef);
-            var player = spawnedPlayer.GetComponent<Player>();
+            var playerNetObj = _networkRunner.Spawn(_playerPrefab, Vector2.zero + Vector2.right * playersLength, quaternion.identity, playerRef);
+            var player = playerNetObj.GetComponent<Player>();
 
-            Runner.SetPlayerObject(playerRef, spawnedPlayer);
+            Runner.SetPlayerObject(playerRef, playerNetObj);
 
             player.Rigidbody.Rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
+
+            var playerName = $"Player №{playerNetObj.InputAuthority.PlayerId}";
+                
+            player.RPC_SetName(playerName);
             
-            spawnedPlayer.name = $"Player {spawnedPlayer.InputAuthority.PlayerId}";
             PlayersCount++;
 
+            RPC_OnPlayerSpawnedInvoke(player);
+            
             _players.Add(playerRef,player);
 
             return player;
         }
 
+        [Rpc]
+        private void RPC_OnPlayerSpawnedInvoke(Player player)
+        {
+            Spawned.OnNext(player);
+        }
+        
         public void PlayerLeft(PlayerRef playerRef)
         {
             Player player = _players[playerRef];

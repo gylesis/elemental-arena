@@ -30,13 +30,13 @@ namespace Dev
         {
             var overlapSphere = OverlapSphere(pos, radius, _playerLayer, out var hits);
 
-            Debug.Log($"Hits count {hits.Count}");
+           // Debug.Log($"Hits count {hits.Count}");
             
             if (overlapSphere)
             {
                 foreach (LagCompensatedHit hit in hits)
                 {
-                    Debug.Log($"Hit {hit.GameObject.name}", hit.GameObject);
+                   // Debug.Log($"Hit {hit.GameObject.name}", hit.GameObject);
                     
                     var player = hit.GameObject.GetComponent<Player>();
 

@@ -1,9 +1,6 @@
-﻿using Fusion;
+﻿using Dev.CommonControllers;
 
 namespace Dev
 {
-    public abstract class Effect : NetworkBehaviour
-    {
-        
-    }
+    public abstract class Effect : NetworkContext { }
 }

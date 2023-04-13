@@ -25,7 +25,7 @@ namespace Dev.Weapons.Guns
 
             var hitsCount = _hits.Count;
 
-            Debug.Log($"Hits count {hitsCount}");
+           // Debug.Log($"Hits count {hitsCount}");
 
             bool hasTarget = false;
 

@@ -22,7 +22,7 @@ namespace Dev
 
         public void TryCraft(PlayerRef playerRef)
         {   
-            Debug.Log($"TryCraft");
+            //Debug.Log($"TryCraft");
             var tryGetPlayer = _playersSpawner.TryGetPlayer(playerRef, out var player);
 
             if (tryGetPlayer == false) return;

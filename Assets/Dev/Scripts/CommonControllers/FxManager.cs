@@ -32,7 +32,7 @@ namespace Dev.CommonControllers
             {
                 T effect = Runner.Spawn(effectPrefab, pos, Quaternion.identity, Object.InputAuthority);
                 
-                RPC_SetPos(effect.Object, pos);
+                effect.RPC_SetPos(pos);
                 
                 Observable.Timer(TimeSpan.FromSeconds(4)).Subscribe((l =>
                 {

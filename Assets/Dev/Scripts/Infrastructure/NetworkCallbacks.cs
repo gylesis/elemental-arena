@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Dev.Infrastructure
@@ -53,6 +54,7 @@ namespace Dev.Infrastructure
             networkInput.Jump = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.Space);
             networkInput.FireDown = Input.GetMouseButton(0);
             networkInput.FireUp = Input.GetMouseButtonUp(0);
+            
             
             Vector3 point = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             point.z = 0;
